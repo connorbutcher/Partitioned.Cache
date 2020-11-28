@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Partitioned.Cache.Provider;
 using System;
 
 namespace Partitioned.Cache.Extensions
@@ -16,19 +16,26 @@ namespace Partitioned.Cache.Extensions
             return partitionCacheProvider;
         }
 
-        public static IPartitionedCacheProvider AddPartition(this IPartitionedCacheProvider partitionedCacheProvider, Type partitionType, string key)
+        public static IPartitionedCacheProvider AddPartition<T>(
+            this IPartitionedCacheProvider partitionedCacheProvider,
+            string key)
         {
-            partitionedCacheProvider.
-        }
+            if (partitionedCacheProvider == null)
+            {
+                throw new ArgumentNullException("The partitionedCacheProvider cannot be null.");
+            }
 
-        public static IServiceProvider ConfigurePartitionedCacheProvider(this IServiceProvider serviceProvider)
-        {
-            var service = serviceProvider.GetService<IPartitionedCacheProvider>();
-            var memCache = serviceProvider.GetService<IMemoryCache>();
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException("The key cannot be null, empty or white space.");
+            }
 
-            service.CachePartitions.Add(new PartitionedCache<string>(memCache));
+            if (!partitionedCacheProvider.TryAddPartition<T>(key))
+            {
+                throw new InvalidOperationException($"Unable to add the partition with key - {key}");
+            }
 
-            return serviceProvider;
+            return partitionedCacheProvider;
         }
     }
 }

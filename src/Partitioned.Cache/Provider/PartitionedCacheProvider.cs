@@ -1,13 +1,23 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
 
-namespace Partitioned.Cache
+namespace Partitioned.Cache.Provider
 {
     public sealed class PartitionedCacheProvider : IPartitionedCacheProvider
     {
         public PartitionedCacheProvider()
         {
-            CachePartitions = new Dictionary<string, PartitionedCacheBase>();
+            CachePartitions = new Dictionary<string, object>();
+        }
+
+        public IPartitionedCache<T> Resolve<T>(string key)
+        {
+            if (!CachePartitions.TryGetValue(key, out var partitionedCache))
+            {
+                // TODO: throw.
+            }
+
+            return (IPartitionedCache<T>)partitionedCache;
         }
 
         public bool TryAddPartition<T>(string key, MemoryCacheOptions memoryCacheOptions = null)
@@ -29,6 +39,6 @@ namespace Partitioned.Cache
             return true;
         }
 
-        public IDictionary<string, PartitionedCacheBase> CachePartitions { get; }
+        private IDictionary<string, object> CachePartitions { get; }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using System.Collections.Generic;
 
-namespace Partitioned.Cache
+namespace Partitioned.Cache.Provider
 {
     public interface IPartitionedCacheProvider
     {
         bool TryAddPartition<T>(string key, MemoryCacheOptions memoryCacheOptions = null);
 
-        IDictionary<string, PartitionedCacheBase> CachePartitions { get; }
+        IPartitionedCache<T> Resolve<T>(string key);
     }
 }
