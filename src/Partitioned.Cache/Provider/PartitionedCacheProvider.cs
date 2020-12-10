@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
 
 namespace Partitioned.Cache.Provider
@@ -14,7 +15,7 @@ namespace Partitioned.Cache.Provider
         {
             if (!CachePartitions.TryGetValue(key, out var partitionedCache))
             {
-                // TODO: throw.
+                throw new InvalidOperationException($"Cannot insert a cache partition with the same key {key}");
             }
 
             return (IPartitionedCache<T>)partitionedCache;

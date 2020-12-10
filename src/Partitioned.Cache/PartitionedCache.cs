@@ -17,9 +17,7 @@ namespace Partitioned.Cache
 
         public async Task<T> GetOrCreateAsync(object key, Func<ICacheEntry, Task<T>> func)
         {
-            var cacheKey = $"{typeof(T)}-{key}";
-
-            return await _memoryCache.GetOrCreateAsync(cacheKey, func);
+            return await _memoryCache.GetOrCreateAsync(key, func);
         }
 
         public bool TryGetValue(object key, out T value)
@@ -73,21 +71,11 @@ namespace Partitioned.Cache
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects)
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
                 disposedValue = true;
             }
         }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~PartitionedCache()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
 
         public void Dispose()
         {
