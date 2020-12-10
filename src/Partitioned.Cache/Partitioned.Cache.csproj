@@ -2,11 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Title>Partitioned Cache</Title>
+    <Description>Wrapper for IMemoryCache that allows for strongly typed partitions</Description>
+    <Copyright>Connor Butcher</Copyright>
     <PackageId>Partitioned.Cache</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Connor Butcher</Authors>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
