@@ -25,8 +25,8 @@ namespace Partitioned.Cache.Sample
             });
 
             services.AddPartitionedCacheProvider()
-                .AddPartition<string>("Users Cache")
-                .AddPartition<int>("UserId Cache");
+                .WithPartition<string>("Users Cache")
+                .WithPartition<int>("UserId Cache");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,10 +46,7 @@ namespace Partitioned.Cache.Sample
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

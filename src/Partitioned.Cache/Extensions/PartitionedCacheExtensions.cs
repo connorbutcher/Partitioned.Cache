@@ -16,7 +16,7 @@ namespace Partitioned.Cache.Extensions
             return partitionCacheProvider;
         }
 
-        public static IPartitionedCacheProvider AddPartition<T>(
+        public static IPartitionedCacheProvider WithPartition<T>(
             this IPartitionedCacheProvider partitionedCacheProvider,
             string key)
         {
